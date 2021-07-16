@@ -81,7 +81,8 @@ localhost:9000
 
 # Troubleshooting Nexus
 Sometimes the container of Nexus is up but the service is down when try to see the service in a web browser.
-To verify if the service is working correctly run the next commands:
+To verify if the service is working correctly run the next commands.
+
 To see the logs of container:
 ```
 docker logs nexus_compose
@@ -94,4 +95,4 @@ Started Sonatype Nexus OSS 3.32.0-03
 
 -------------------------------------------------
 ```
-After that try again in the web browser.
+Once you find the string try again in the web browser.
