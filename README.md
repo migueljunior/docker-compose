@@ -43,10 +43,17 @@ docker-compose up -d
 ## Verify if the containers are running
 After run the cantainers with **docker-compose up -d** verify the containers are runnig with:
 ```
-docker-compose up 
+docker ps
 ```
 Output:
 ```
+CONTAINER ID   IMAGE                                         COMMAND                  CREATED         STATUS         PORTS                                                                                      NAMES
+725b752f716a   sonarqube                                     "bin/run.sh bin/sona…"   9 minutes ago   Up 9 minutes   0.0.0.0:9000->9000/tcp, :::9000->9000/tcp                                                  sonar_compose
+71d053c315a1   postgres                                      "docker-entrypoint.s…"   9 minutes ago   Up 9 minutes   5432/tcp                                                                                   postgres_compose
+ac33c5d2b12e   juniorrodriguez/multistage:junior.rodriguez   "flask run --port=88…"   9 minutes ago   Up 9 minutes   0.0.0.0:8888->8888/tcp, :::8888->8888/tcp                                                  python_app_compose
+d80fa0d3b282   sonatype/nexus3                               "sh -c ${SONATYPE_DI…"   9 minutes ago   Up 9 minutes   0.0.0.0:8081->8081/tcp, :::8081->8081/tcp                                                  nexus_compose
+7ccdecd595f7   jenkins/jenkins                               "/sbin/tini -- /usr/…"   9 minutes ago   Up 9 minutes   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:50000->50000/tcp, :::50000->50000/tcp   jenkins_compose
+
 ```
 
 ## Verify the applications in the browser
