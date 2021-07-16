@@ -1,0 +1,76 @@
+version: '3'
+
+services:
+    jenkins:
+        image: jenkins/jenkins
+        container_name: jenkins_compose
+        ports:
+            - 8080:8080
+            - 50000:50000
+        networks:
+            - final_project
+        volumes:
+            - jenkins_volume:/var/jenkins_home
+
+    nexus:
+        image: sonatype/nexus3
+        container_name: nexus_compose
+        ports:
+            - 8081:8081
+        depends_on:
+            - jenkins
+        networks:
+            - final_project
+        volumes:
+            - nexus_volume:/tmp
+
+    pythonapp:
+        image: juniorrodriguez/multistage:junior.rodriguez
+        container_name: python_app_compose
+        ports:
+            - 8888:8888
+        depends_on:
+            - nexus
+        networks:
+            - final_project
+        volumes:
+            - app_volume:/tmp
+
+    database:
+        image: postgres
+        container_name: postgres_compose
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=mysecretpassword
+        depends_on:
+            - pythonapp
+        networks:
+            - final_project
+        volumes:
+            - database_volume:/tmp
+    
+    sonar:
+        image: sonarqube
+        container_name: sonar_compose
+        ports:
+            - 9000:9000
+        environment:
+            - "sonar.jdbc.url:jdbc:postgresql://postgres_compose/postgres_compose"
+            - "sonar.jdbc.username:root"
+            - "sonar.jdbc.password:mysecretpassword"
+        depends_on:
+            - database
+        networks:
+            - final_project
+        volumes:
+            - sonar_volume:/tmp
+
+networks:
+    final_project:
+
+volumes:
+    jenkins_volume:
+    nexus_volume:
+    app_volume:
+    database_volume:
+    sonar_volume:
