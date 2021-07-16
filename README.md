@@ -40,6 +40,12 @@ Only clone the repository and run the command:
 docker-compose up -d
 ```
 
+## How stop the containers
+Inside the folder you cloned the repository run the next command:
+```
+docker-compose down
+```
+
 ## Verify if the containers are running
 After run the cantainers with **docker-compose up -d** verify the containers are runnig with:
 ```
